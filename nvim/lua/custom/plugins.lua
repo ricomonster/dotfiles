@@ -11,9 +11,17 @@ local plugins = {
     opts = {
       ensure_installed = {
         "typescript-language-server",
-        "eslint_d"
-      }
-    }
+        "eslint_d",
+        "gopls",
+      },
+    },
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    ft = "go",
+    opts = function()
+      return require "custom.configs.null-ls"
+    end,
   },
   {
     "f-person/git-blame.nvim",
