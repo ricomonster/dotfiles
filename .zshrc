@@ -112,3 +112,4 @@ func run_with_aws() {
   AWS_PROFILE=M1LocalDevelopmentAwsDev-547102950440 AWS_SDK_LOAD_CONFIG=1 npm start
 }
 alias vim=nvim
+alias vi=nvim

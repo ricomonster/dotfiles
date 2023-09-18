@@ -9,6 +9,9 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 opt.softtabstop = 4
 
+vim.opt.list = true
+vim.opt.listchars:append "space:⋅"
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "go",
   callback = function()

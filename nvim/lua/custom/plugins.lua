@@ -26,6 +26,20 @@ local plugins = {
   {
     "f-person/git-blame.nvim",
     event = "VeryLazy"
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    event = "VeryLazy",
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    opts = {
+      char = "",
+      context_char = "⋅",
+      show_current_context = true,
+      show_current_context_start = true,
+    }
   }
 }
 
