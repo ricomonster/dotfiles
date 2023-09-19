@@ -101,15 +101,15 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PYENV_ROOT/bin:$PATH
 
-func load_aws() {
-  export AWS_PROFILE=M1LocalDevelopmentAwsDev-547102950440
-  export AWS_SDK_LOAD_CONFIG=1
-}
-
-func run_with_aws() {
-  AWS_PROFILE=M1LocalDevelopmentAwsDev-547102950440 AWS_SDK_LOAD_CONFIG=1 npm start
-}
 alias vim=nvim
 alias vi=nvim
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if command -v pyenv 1>/dev/null 2>&1; then
+ eval "$(pyenv init --path)"
+fi
