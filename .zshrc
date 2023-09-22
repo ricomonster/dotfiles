@@ -113,3 +113,7 @@ export NVM_DIR="$HOME/.nvm"
 if command -v pyenv 1>/dev/null 2>&1; then
  eval "$(pyenv init --path)"
 fi
+
+twc_request_access () {
+    aws sts assume-role --role-arn arn:aws:iam::049112896391:role/DeveloperAccessRole --role-session-name RevelationDevSession
+}
