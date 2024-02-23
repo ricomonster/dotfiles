@@ -105,14 +105,14 @@ else
     config.launch_menu = {
         -- TAKE CARE NOT TO CHANGE LABELS AS IT IS USED TO START SPECIFIC
         -- SHELL FROM DESKTOP
-        {
-            label = 'Daily',
-            args = { 'distrobox', 'enter', 'daily' },
-        },
-        {
-            label = 'Toolbox',
-            args = { 'toolbox-enter-wrapper' },
-        },
+        -- {
+        --     label = 'Daily',
+        --     args = { 'distrobox', 'enter', 'daily' },
+        -- },
+        -- {
+        --     label = 'Toolbox',
+        --     args = { 'toolbox-enter-wrapper' },
+        -- },
         {
             label = 'System Shell',
             args = { shell },
@@ -161,12 +161,16 @@ wezterm.on('gui-startup', function(cmd_obj)
 end)
 
 --- THEMING ---
-config.color_scheme = 'kanagawabones'
+config.color_scheme = 'Tokyo Night'
 config.font = wezterm.font_with_fallback({
+  "MesloLGL Nerd Font Propo",
   "JetBrainsMonoNL Nerd Font"
 })
-config.font_size = 9
-config.line_height = 1.1
+config.freetype_load_flags = 'NO_HINTING'
+config.freetype_render_target = 'HorizontalLcd'
+config.freetype_load_target = 'Light'
+config.font_size = 12
+config.line_height = 1.2
 
 config.window_padding = {
     left = '6px',
@@ -280,6 +284,6 @@ end)
 
 --- EXTRA FILES ---
 -- merge keybindings onto the config
-require('keybindings').apply(config)
+-- require('keybindings').apply(config)
 
 return config
