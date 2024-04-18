@@ -40,7 +40,7 @@ require('lazy').setup {
 
   require 'kickstart/plugins/cmp',
 
-  -- require 'kickstart/plugins/tokyonight',
+  require 'kickstart/plugins/tokyonight',
 
   require 'kickstart/plugins/todo-comments',
 
@@ -50,7 +50,7 @@ require('lazy').setup {
 
   require 'kickstart/plugins/nvim-tree',
 
-  require 'kickstart/plugins/kanagawa',
+  -- require 'kickstart/plugins/kanagawa',
 
   require 'kickstart/plugins/lazygit',
 
@@ -61,6 +61,10 @@ require('lazy').setup {
   require 'kickstart/plugins/autoclose',
 
   require 'kickstart/plugins/nvim-ufo',
+
+  require 'kickstart/plugins/codeium',
+
+  require 'kickstart/plugins/statusline',
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
