@@ -117,3 +117,5 @@ fi
 twc_request_access () {
     aws sts assume-role --role-arn arn:aws:iam::049112896391:role/DeveloperAccessRole --role-session-name RevelationDevSession
 }
+
+DISPLAY="" neofetch

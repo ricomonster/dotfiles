@@ -164,15 +164,14 @@ end)
 config.color_scheme = "tokyonight_night"
 -- config.color_scheme = "kanagawa"
 config.font = wezterm.font_with_fallback({
-	"MesloLGL Nerd Font Propo",
-	-- "JetBrainsMonoNL Nerd Font",
-	-- "Hack Nerd Font",
+	-- "MesloLGL Nerd Font Propo",
+	{ family = "JetBrainsMonoNL Nerd Font", weight = "Medium" },
 })
-config.freetype_load_flags = "NO_HINTING|MONOCHROME"
+config.freetype_load_flags = "NO_HINTING"
 config.freetype_render_target = "HorizontalLcd"
-config.freetype_load_target = "HorizontalLcd"
+config.freetype_load_target = "Light"
 config.font_size = 12
-config.line_height = 1
+config.line_height = 1.1
 
 config.window_padding = {
 	-- left = '6px',
