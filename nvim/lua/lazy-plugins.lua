@@ -64,7 +64,7 @@ require('lazy').setup {
 
   require 'kickstart/plugins/codeium',
 
-  require 'kickstart/plugins/statusline',
+  -- require 'kickstart/plugins/statusline',
 
   require 'kickstart/plugins/startup',
 
