@@ -33,6 +33,12 @@ return {
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+
+      -- Fast and flexible start screen
+      require('mini.starter').setup()
+
+      -- Minimal and fast autopairs
+      require('mini.pairs').setup()
     end,
   },
 }
