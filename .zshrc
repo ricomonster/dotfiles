@@ -119,3 +119,4 @@ twc_request_access () {
 }
 
 DISPLAY="" neofetch
+export LANG=en_US.UTF-8
