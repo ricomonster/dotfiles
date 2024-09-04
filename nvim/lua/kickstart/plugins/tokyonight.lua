@@ -8,6 +8,15 @@ return {
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
+      require('tokyonight').setup {
+        style = 'night',
+        -- disable italic for functions
+        styles = {
+          functions = {},
+          keywords = { italic = false },
+        },
+      }
+
       -- Load the colorscheme here
       vim.cmd.colorscheme 'tokyonight-night'
 

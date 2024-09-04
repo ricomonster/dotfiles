@@ -78,6 +78,7 @@
 local wezterm = require("wezterm")
 
 local config = {}
+
 if wezterm.config_builder then
 	-- makes nicer error messages for config errors
 	config = wezterm.config_builder()
@@ -92,7 +93,6 @@ config.check_for_updates = true
 -- NOTE: do not use login shells as they make it load profile each time and
 -- when there is no need to do that, except in containers
 if WINDOWS then
-	-- TODO:
 	-- default_domain = "WSL:Ubuntu"
 	config.default_prog = { "wsl", "--cd", "~" }
 else
@@ -123,6 +123,7 @@ else
 	config.default_prog = config.launch_menu[1].args
 end
 
+-- EVENTS
 -- add menu subcommand `wezterm start menu <index|label>`
 wezterm.on("gui-startup", function(cmd_obj)
 	local tab = nil
@@ -160,18 +161,58 @@ wezterm.on("gui-startup", function(cmd_obj)
 	end
 end)
 
+wezterm.on("update-right-status", function(window, pane)
+	local user_vars = pane:get_user_vars()
+
+	local icon = user_vars.window_prefix
+	if not icon or icon == "" then
+		-- fallback for the icon,
+		icon = ""
+	end
+
+	window:set_left_status(wezterm.format({
+		{ Background = { Color = "#333333" } },
+		{ Text = " " .. wezterm.pad_right(icon, 3) },
+	}))
+
+	local title = pane:get_title()
+	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
+
+	-- figure out a way to center it
+	window:set_right_status(wezterm.format({
+		{ Background = { Color = "#555555" } },
+		{ Text = " " .. title .. " " },
+		{ Background = { Color = "#333333" } },
+		{ Text = date },
+	}))
+end)
+
+wezterm.on("format-tab-title", function(tab, _, _, _, _)
+	-- i do not like how i can basically hide tabs if i zoom in
+	local is_zoomed = ""
+	if tab.active_pane.is_zoomed then
+		is_zoomed = "z"
+	end
+
+	return {
+		{ Text = " " .. tab.tab_index + 1 .. is_zoomed .. " " },
+	}
+end)
+
 --- THEMING ---
 config.color_scheme = "tokyonight_night"
 -- config.color_scheme = "kanagawa"
 config.font = wezterm.font_with_fallback({
-	-- "MesloLGL Nerd Font Propo",
-	{ family = "JetBrainsMonoNL Nerd Font", weight = "Medium" },
+	-- { family = "JetBrainsMonoNL Nerd Font" },
+	{ family = "MesloLGL Nerd Font Propo" },
 })
 config.freetype_load_flags = "NO_HINTING"
-config.freetype_render_target = "HorizontalLcd"
-config.freetype_load_target = "Light"
-config.font_size = 12
-config.line_height = 1.1
+-- config.freetype_render_target = "HorizontalLcd"
+-- config.freetype_load_target = "HorizontalLcd"
+config.font_size = 11.5
+config.line_height = 1
+-- config.cell_width = 0.9
+config.front_end = "WebGpu"
 
 config.window_padding = {
 	-- left = '6px',
@@ -243,7 +284,7 @@ config.use_fancy_tab_bar = false
 
 --- BEHAVIOUR ---
 config.hide_mouse_cursor_when_typing = true
-config.default_cursor_style = "SteadyUnderline"
+config.default_cursor_style = "BlinkingUnderline"
 
 -- remove all link parsing
 config.hyperlink_rules = {}
@@ -266,47 +307,5 @@ config.window_frame = {
 	border_bottom_color = "gray",
 	border_top_color = "gray",
 }
-
-wezterm.on("update-right-status", function(window, pane)
-	local user_vars = pane:get_user_vars()
-
-	local icon = user_vars.window_prefix
-	if not icon or icon == "" then
-		-- fallback for the icon,
-		icon = ""
-	end
-
-	window:set_left_status(wezterm.format({
-		{ Background = { Color = "#333333" } },
-		{ Text = " " .. wezterm.pad_right(icon, 3) },
-	}))
-
-	local title = pane:get_title()
-	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
-
-	-- figure out a way to center it
-	window:set_right_status(wezterm.format({
-		{ Background = { Color = "#555555" } },
-		{ Text = " " .. title .. " " },
-		{ Background = { Color = "#333333" } },
-		{ Text = date },
-	}))
-end)
-
-wezterm.on("format-tab-title", function(tab, _, _, _, _)
-	-- i do not like how i can basically hide tabs if i zoom in
-	local is_zoomed = ""
-	if tab.active_pane.is_zoomed then
-		is_zoomed = "z"
-	end
-
-	return {
-		{ Text = " " .. tab.tab_index + 1 .. is_zoomed .. " " },
-	}
-end)
-
---- EXTRA FILES ---
--- merge keybindings onto the config
--- require('keybindings').apply(config)
 
 return config
