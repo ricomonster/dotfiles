@@ -1,0 +1,20 @@
+add_newline = true
+# A minimal left prompt
+format = """$username$hostname$directory$character"""
+# move the rest of the prompt to the right
+right_format = """$all"""
+command_timeout = 1000
+
+[username]
+format = '[$user]($style)##'
+show_always = true
+
+[hostname]
+format = '[$hostname]($style): '
+ssh_only = false
+
+[git_branch]
+format =  '[$symbol$branch(:$remote_branch)]($style)'
+
+[line_break]
+disabled = true
