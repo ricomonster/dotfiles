@@ -5,7 +5,7 @@ command_timeout = 1000
 truncate_to_repo = false
 
 [git_branch]
-format =  '[$symbol$branch(:$remote_branch)]($style)'
+format =  '[$symbol$branch(:$remote_branch)]($style) '
 
 [hostname]
 format = '[$hostname:]($style)'

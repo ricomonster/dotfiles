@@ -24,3 +24,6 @@ fi
 if ([[ $(uname) == "Darwin" ]]); then
 	source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+# Cargo
+export PATH="$HOME/.cargo/bin:$PATH"
