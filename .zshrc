@@ -25,5 +25,13 @@ if ([[ $(uname) == "Darwin" ]]); then
 	source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+if ([[ $(uname) == "Linux" ]]); then
+	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
+
 # Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
+
+export GOPATH=$(go env GOPATH)
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOBIN
