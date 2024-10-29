@@ -212,8 +212,8 @@ config.freetype_load_flags = "NO_HINTING"
 -- config.freetype_render_target = "Light"
 config.freetype_load_target = "Light"
 config.font_size = 12
-config.line_height = 1.2
--- config.cell_width = 0.9
+config.line_height = 1.1
+config.cell_width = 1
 config.front_end = "WebGpu"
 
 config.window_padding = {
