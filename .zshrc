@@ -32,6 +32,7 @@ fi
 # Cargo
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Go
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN

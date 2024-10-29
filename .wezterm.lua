@@ -113,14 +113,14 @@ else
 		--     label = 'Toolbox',
 		--     args = { 'toolbox-enter-wrapper' },
 		-- },
-		{
-			label = "System Shell",
-			args = { shell },
-		},
+		-- {
+		-- 	label = "System Shell",
+		-- 	args = { shell },
+		-- },
 	}
 
 	-- default to first menu item
-	config.default_prog = config.launch_menu[1].args
+	-- config.default_prog = config.launch_menu[1].args
 end
 
 -- EVENTS
@@ -200,17 +200,19 @@ wezterm.on("format-tab-title", function(tab, _, _, _, _)
 end)
 
 --- THEMING ---
+--- Themes available: tokyonight_night, kanagawa
 config.color_scheme = "tokyonight_night"
--- config.color_scheme = "kanagawa"
 config.font = wezterm.font_with_fallback({
 	-- { family = "JetBrainsMonoNL Nerd Font" },
-	{ family = "MesloLGL Nerd Font Propo" },
+	-- { family = "MesloLGL Nerd Font Propo" },
+	{ family = "RobotoMono Nerd Font" },
 })
+
 config.freetype_load_flags = "NO_HINTING"
--- config.freetype_render_target = "HorizontalLcd"
--- config.freetype_load_target = "HorizontalLcd"
-config.font_size = 11.5
-config.line_height = 1
+-- config.freetype_render_target = "Light"
+config.freetype_load_target = "Light"
+config.font_size = 12
+config.line_height = 1.2
 -- config.cell_width = 0.9
 config.front_end = "WebGpu"
 
@@ -223,46 +225,6 @@ config.window_padding = {
 	top = 0,
 	bottom = 0,
 }
-
--- config.colors = {
--- 	foreground = "#dcd7ba",
--- 	background = "#1f1f28",
--- 	-- Dragon
--- 	-- foreground = "#C5C9C5",
--- 	-- background = "#181616",
---
--- 	cursor_bg = "#c8c093",
--- 	cursor_fg = "#c8c093",
--- 	cursor_border = "#c8c093",
---
--- 	selection_fg = "#c8c093",
--- 	selection_bg = "#2d4f67",
---
--- 	scrollbar_thumb = "#16161d",
--- 	split = "#16161d",
---
--- 	ansi = { "#090618", "#c34043", "#76946a", "#c0a36e", "#7e9cd8", "#957fb8", "#6a9589", "#c8c093" },
--- 	brights = { "#727169", "#e82424", "#98bb6c", "#e6c384", "#7fb4ca", "#938aa9", "#7aa89f", "#dcd7ba" },
--- 	indexed = { [16] = "#ffa066", [17] = "#ff5d62" },
--- 	tab_bar = {
--- 		background = "#333333",
---
--- 		active_tab = {
--- 			fg_color = "#ffffff",
--- 			bg_color = "#444444",
--- 		},
---
--- 		new_tab = {
--- 			bg_color = "#333333",
--- 			fg_color = "#ffffff",
--- 		},
---
--- 		new_tab_hover = {
--- 			bg_color = "#555555",
--- 			fg_color = "#ffffff",
--- 		},
--- 	},
--- }
 
 local window_min = " 󰖰 "
 local window_max = " 󰖯 "
@@ -293,7 +255,8 @@ config.hyperlink_rules = {}
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
 
-config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+-- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+config.window_decorations = "RESIZE"
 
 -- TODO remove window frame when fullscreen
 -- TODO change frame color depending on the user var
