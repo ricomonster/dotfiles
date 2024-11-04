@@ -99,12 +99,12 @@ run ~/.tmux/plugins/tmux-cpu/cpu.tmux
 
 # Plugin configurations
 # Continuum
-set -g @resurrect-save 'S'
-set -g @resurrect-restore 'R'
-set -g @resurrect-strategy-nvim 'session'
-set -g @resurrect-capture-pane-contents 'on'
-set -g @continuum-save-interval '10'
 set -g @continuum-restore 'on'
+set -g @continuum-save-interval '10'
+set -g @resurrect-capture-pane-contents 'on'
+set -g @resurrect-restore 'R'
+set -g @resurrect-save 'S'
+set -g @resurrect-strategy-nvim 'session'
 # set -g status-left 'Continuum status: #{continuum_status}'
 
 # Resurrect

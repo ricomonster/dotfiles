@@ -205,15 +205,16 @@ config.color_scheme = "tokyonight_night"
 config.font = wezterm.font_with_fallback({
 	-- { family = "JetBrainsMonoNL Nerd Font" },
 	-- { family = "MesloLGL Nerd Font Propo" },
-	{ family = "RobotoMono Nerd Font" },
+	-- { family = "RobotoMono Nerd Font" },
+	{ family = "Liga SFMono Nerd Font" },
 })
 
 config.freetype_load_flags = "NO_HINTING"
 -- config.freetype_render_target = "Light"
 config.freetype_load_target = "Light"
-config.font_size = 12
-config.line_height = 1.1
-config.cell_width = 1
+config.font_size = 11
+config.line_height = 1.2
+-- config.cell_width = 1
 config.front_end = "WebGpu"
 
 config.window_padding = {
