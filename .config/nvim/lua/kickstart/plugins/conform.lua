@@ -16,6 +16,7 @@ return {
         -- is found.
         javascript = { 'eslint_d' },
         typescript = { 'eslint_d' },
+        svelte = { 'eslint_d' },
         go = { 'goimports-reviser', 'gofumpt' },
       },
     },

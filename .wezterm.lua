@@ -1,80 +1,3 @@
--- local wezterm = require 'wezterm';
--- local scheme = wezterm.get_builtin_color_schemes()["kanagawabones"]
-
--- function recompute_padding(window)
---   local window_dims = window:get_dimensions();
---   local overrides = window:get_config_overrides() or {}
-
---   if not window_dims.is_full_screen then
---     if not overrides.window_padding then
---       -- not changing anything
---       return;
---     end
---     overrides.window_padding = nil;
---   else
---     -- Use only the middle 33%
---     local third = math.floor(window_dims.pixel_width / 3)
---     local new_padding = {
---       left = third,
---       right = third,
---       top = 0,
---       bottom = 0
---     };
---     if overrides.window_padding and new_padding.left == overrides.window_padding.left then
---       -- padding is same, avoid triggering further changes
---       return
---     end
---     overrides.window_padding = new_padding
-
---   end
---   window:set_config_overrides(overrides)
--- end
-
--- wezterm.on("window-resized", function(window, pane)
---   recompute_padding(window)
--- end);
-
--- wezterm.on("window-config-reloaded", function(window)
---   recompute_padding(window)
--- end);
-
--- return {
---   default_prog = {"wsl", "--cd", "~"},
---   -- Fonts
---   font = wezterm.font("JetBrainsMonoNL Nerd Font"),
---   font_size = 9.0,
---   line_height = 1.2,
-
---   -- Colors
---   win32_system_backdrop = "Mica",
---   window_background_opacity = 0,
---   inactive_pane_hsb = {
---     hue = 1.0,
---     saturation = 0.7,
---     brightness = 0.8,
---   },
-
---   -- UI
---   color_scheme = "kanagawabones",
---   colors = {
--- 		tab_bar = {
--- 			background = scheme.background,
--- 		},
--- 	},
---   default_cursor_style  = "SteadyUnderline",
---   -- tab_bar_at_bottom = true,
---   use_fancy_tab_bar = false,
---   window_decorations = 'INTEGRATED_BUTTONS | RESIZE',
-
---   -- Custom keymaps
---   keys = {
---     { key = "h", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Left"}},
---     { key = "j", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Down"}},
---     { key = "k", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Up"}},
---     { key = "l", mods = "LEADER",       action=wezterm.action{ActivatePaneDirection="Right"}},
---   },
--- }
--- wezterm configuration
 local wezterm = require("wezterm")
 
 local config = {}
@@ -94,7 +17,7 @@ config.check_for_updates = true
 -- when there is no need to do that, except in containers
 if WINDOWS then
 	-- default_domain = "WSL:Ubuntu"
-	config.default_prog = { "wsl", "--cd", "~" }
+	config.default_prog = { "wsl", "-d", "Arch", "--cd", "~" }
 else
 	local shell = os.getenv("SHELL")
 	if FLATPAK or not shell then
@@ -103,24 +26,14 @@ else
 	end
 
 	config.launch_menu = {
-		-- TAKE CARE NOT TO CHANGE LABELS AS IT IS USED TO START SPECIFIC
-		-- SHELL FROM DESKTOP
-		-- {
-		--     label = 'Daily',
-		--     args = { 'distrobox', 'enter', 'daily' },
-		-- },
-		-- {
-		--     label = 'Toolbox',
-		--     args = { 'toolbox-enter-wrapper' },
-		-- },
-		-- {
-		-- 	label = "System Shell",
-		-- 	args = { shell },
-		-- },
+		{
+			label = "System Shell",
+			args = { shell },
+		},
 	}
 
 	-- default to first menu item
-	-- config.default_prog = config.launch_menu[1].args
+	config.default_prog = config.launch_menu[1].args
 end
 
 -- EVENTS
@@ -161,31 +74,31 @@ wezterm.on("gui-startup", function(cmd_obj)
 	end
 end)
 
-wezterm.on("update-right-status", function(window, pane)
-	local user_vars = pane:get_user_vars()
-
-	local icon = user_vars.window_prefix
-	if not icon or icon == "" then
-		-- fallback for the icon,
-		icon = ""
-	end
-
-	window:set_left_status(wezterm.format({
-		{ Background = { Color = "#333333" } },
-		{ Text = " " .. wezterm.pad_right(icon, 3) },
-	}))
-
-	local title = pane:get_title()
-	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
-
-	-- figure out a way to center it
-	window:set_right_status(wezterm.format({
-		{ Background = { Color = "#555555" } },
-		{ Text = " " .. title .. " " },
-		{ Background = { Color = "#333333" } },
-		{ Text = date },
-	}))
-end)
+-- wezterm.on("update-right-status", function(window, pane)
+-- 	local user_vars = pane:get_user_vars()
+--
+-- 	local icon = user_vars.window_prefix
+-- 	if not icon or icon == "" then
+-- 		-- fallback for the icon,
+-- 		icon = ""
+-- 	end
+--
+-- 	window:set_left_status(wezterm.format({
+-- 		{ Background = { Color = "#333333" } },
+-- 		{ Text = " " .. wezterm.pad_right(icon, 3) },
+-- 	}))
+--
+-- 	local title = pane:get_title()
+-- 	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
+--
+-- 	-- figure out a way to center it
+-- 	window:set_right_status(wezterm.format({
+-- 		{ Background = { Color = "#555555" } },
+-- 		{ Text = " " .. title .. " " },
+-- 		{ Background = { Color = "#333333" } },
+-- 		{ Text = date },
+-- 	}))
+-- end)
 
 wezterm.on("format-tab-title", function(tab, _, _, _, _)
 	-- i do not like how i can basically hide tabs if i zoom in
@@ -200,21 +113,18 @@ wezterm.on("format-tab-title", function(tab, _, _, _, _)
 end)
 
 --- THEMING ---
---- Themes available: tokyonight_night, kanagawa
 config.color_scheme = "tokyonight_night"
+-- config.color_scheme = "kanagawa"
 config.font = wezterm.font_with_fallback({
-	-- { family = "JetBrainsMonoNL Nerd Font" },
-	-- { family = "MesloLGL Nerd Font Propo" },
-	-- { family = "RobotoMono Nerd Font" },
 	{ family = "Liga SFMono Nerd Font" },
+	{ family = "MesloLGL Nerd Font Propo" },
 })
-
 config.freetype_load_flags = "NO_HINTING"
--- config.freetype_render_target = "Light"
-config.freetype_load_target = "Light"
-config.font_size = 11
-config.line_height = 1.3
--- config.cell_width = 1
+-- config.freetype_render_target = "HorizontalLcd"
+-- config.freetype_load_target = "HorizontalLcd"
+config.font_size = 9
+config.line_height = 1.4
+-- config.cell_width = 0.9
 config.front_end = "WebGpu"
 
 config.window_padding = {
@@ -256,8 +166,7 @@ config.hyperlink_rules = {}
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = false
 
--- config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
-config.window_decorations = "RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
 
 -- TODO remove window frame when fullscreen
 -- TODO change frame color depending on the user var
