@@ -1,0 +1,186 @@
+local wezterm = require("wezterm")
+
+local config = {}
+
+if wezterm.config_builder then
+	-- makes nicer error messages for config errors
+	config = wezterm.config_builder()
+end
+
+--- GLOBALS ---
+local WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
+local FLATPAK = os.getenv("container") == "flatpak"
+
+config.check_for_updates = true
+
+-- NOTE: do not use login shells as they make it load profile each time and
+-- when there is no need to do that, except in containers
+if WINDOWS then
+	-- default_domain = "WSL:Ubuntu"
+	config.default_prog = { "wsl", "-d", "Arch", "--cd", "~" }
+else
+	local shell = os.getenv("SHELL")
+	if FLATPAK or not shell then
+		-- shell var in flatpak is always /bin/sh so default to zsh
+		shell = "/usr/bin/zsh"
+	end
+
+	-- config.launch_menu = {
+	-- 	{
+	-- 		label = "System Shell",
+	-- 		args = { shell },
+	-- 	},
+	-- }
+	--
+	-- -- default to first menu item
+	-- config.default_prog = config.launch_menu[1].args
+end
+
+-- EVENTS
+-- add menu subcommand `wezterm start menu <index|label>`
+wezterm.on("gui-startup", function(cmd_obj)
+	local tab = nil
+	local pane = nil
+	local window = nil
+
+	if cmd_obj and cmd_obj.args then
+		local args = cmd_obj.args
+
+		local command = args[1]
+		if command == "menu" and args[2] then
+			local arg = args[2]
+			local index = tonumber(arg)
+
+			if index ~= nil then
+				-- try to spawn the launch menu with the specific index
+				tab, pane, window = wezterm.mux.spawn_window(config.launch_menu[index] or {})
+			else
+				-- the argument is not a number so try to match it with a label
+				for _, menu_item in ipairs(config.launch_menu) do
+					if arg and string.lower(menu_item.label) == string.lower(arg) then
+						tab, pane, window = wezterm.mux.spawn_window(menu_item)
+					end
+				end
+
+				-- no matches found, spawn the default
+				tab, pane, window = wezterm.mux.spawn_window({})
+			end
+		end
+	end
+
+	-- fallback to default way it works so i dont break anything
+	if window == nil then
+		tab, pane, window = wezterm.mux.spawn_window(cmd_obj or {})
+	end
+end)
+
+-- wezterm.on("update-right-status", function(window, pane)
+-- 	local user_vars = pane:get_user_vars()
+--
+-- 	local icon = user_vars.window_prefix
+-- 	if not icon or icon == "" then
+-- 		-- fallback for the icon,
+-- 		icon = ""
+-- 	end
+--
+-- 	window:set_left_status(wezterm.format({
+-- 		{ Background = { Color = "#333333" } },
+-- 		{ Text = " " .. wezterm.pad_right(icon, 3) },
+-- 	}))
+--
+-- 	local title = pane:get_title()
+-- 	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
+--
+-- 	-- figure out a way to center it
+-- 	window:set_right_status(wezterm.format({
+-- 		{ Background = { Color = "#555555" } },
+-- 		{ Text = " " .. title .. " " },
+-- 		{ Background = { Color = "#333333" } },
+-- 		{ Text = date },
+-- 	}))
+-- end)
+
+wezterm.on("format-tab-title", function(tab, _, _, _, _)
+	-- i do not like how i can basically hide tabs if i zoom in
+	local is_zoomed = ""
+	if tab.active_pane.is_zoomed then
+		is_zoomed = "z"
+	end
+
+	return {
+		{ Text = " " .. tab.tab_index + 1 .. is_zoomed .. " " },
+	}
+end)
+
+--- THEMING ---
+config.color_scheme = "tokyonight_night"
+-- config.color_scheme = "kanagawa"
+config.font = wezterm.font_with_fallback({
+	{ family = "Liga SFMono Nerd Font" },
+	{ family = "MesloLGL Nerd Font Propo" },
+})
+config.freetype_load_flags = "NO_HINTING"
+-- config.freetype_render_target = "HorizontalLcd"
+-- config.freetype_load_target = "HorizontalLcd"
+config.font_size = 12
+config.line_height = 1.4
+-- config.cell_width = 0.9
+config.front_end = "WebGpu"
+
+config.harfbuzz_features = { "calt=0" }
+
+config.window_padding = {
+	-- left = '6px',
+	left = 0,
+	-- right = '6px',
+	right = 0,
+	-- top = '2px',
+	top = 0,
+	bottom = 0,
+}
+
+local window_min = " 󰖰 "
+local window_max = " 󰖯 "
+local window_close = " 󰅖 "
+config.tab_bar_style = {
+	window_hide = window_min,
+	window_hide_hover = window_min,
+	window_maximize = window_max,
+	window_maximize_hover = window_max,
+	window_close = window_close,
+	window_close_hover = window_close,
+}
+
+config.tab_max_width = 100
+
+-- makes the tabbar look more like TUI
+config.use_fancy_tab_bar = false
+-- config.hide_tab_bar_if_only_one_tab = true -- you can drag using the tab bar
+
+--- BEHAVIOUR ---
+config.hide_mouse_cursor_when_typing = true
+config.default_cursor_style = "BlinkingUnderline"
+
+-- remove all link parsing
+config.hyperlink_rules = {}
+
+-- makes alt act as regular alt
+config.send_composed_key_when_left_alt_is_pressed = false
+config.send_composed_key_when_right_alt_is_pressed = false
+
+config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+
+-- TODO remove window frame when fullscreen
+-- TODO change frame color depending on the user var
+config.window_frame = {
+	border_left_width = "3px",
+	border_right_width = "3px",
+	border_bottom_height = "3px",
+	border_top_height = "3px",
+	border_left_color = "gray",
+	border_right_color = "gray",
+	border_bottom_color = "gray",
+	border_top_color = "gray",
+}
+
+return config

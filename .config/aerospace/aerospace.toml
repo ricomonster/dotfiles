@@ -128,7 +128,7 @@ alt-p = 'workspace P' # Postman
 # alt-q = 'workspace Q'
 # alt-r = 'workspace R'
 # alt-s = 'workspace S'
-# alt-t = 'workspace T'
+alt-t = 'workspace T' # TickTick
 # alt-u = 'workspace U'
 # alt-v = 'workspace V'
 # alt-w = 'workspace W'
@@ -161,7 +161,7 @@ alt-shift-p = 'move-node-to-workspace P' # Go to Postman
 # alt-shift-q = 'move-node-to-workspace Q'
 # alt-shift-r = 'move-node-to-workspace R'
 # alt-shift-s = 'move-node-to-workspace S'
-# alt-shift-t = 'move-node-to-workspace T'
+alt-shift-t = 'move-node-to-workspace T' # Go to TickTick
 # alt-shift-u = 'move-node-to-workspace U'
 # alt-shift-v = 'move-node-to-workspace V'
 # alt-shift-w = 'move-node-to-workspace W'
@@ -201,6 +201,10 @@ if.app-id = 'com.microsoft.edgemac'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
+if.app-id = 'app.zen-browser.zen'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'
 run = 'move-node-to-workspace 1'
 
@@ -219,6 +223,23 @@ run = 'move-node-to-workspace O'
 [[on-window-detected]]
 if.app-id = 'com.postmanlabs.mac.canary'
 run = 'move-node-to-workspace P'
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = 'move-node-to-workspace P'
+
+[[on-window-detected]]
+if.app-id = 'com.TickTick.task.mac'
+run = 'move-node-to-workspace T'
+
+# Windows that must be better in floating mode
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'app.zen.browser.zen.window'
+run = 'layout floating'
 
 [[on-window-detected]]
 check-further-callbacks = true

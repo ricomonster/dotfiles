@@ -1,184 +1,184 @@
+--- wezterm.lua
+--- __      __      _
+--- \ \    / /__ __| |_ ___ _ _ _ __
+---  \ \/\/ / -_)_ /  _/ -_) '_| '  \
+---   \_/\_/\___/__|\__\___|_| |_|_|_|
+---
+--- My Wezterm config file
+
 local wezterm = require("wezterm")
-
 local config = {}
-
+-- Use config builder object if possible
 if wezterm.config_builder then
-	-- makes nicer error messages for config errors
 	config = wezterm.config_builder()
 end
 
---- GLOBALS ---
-local WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
-local FLATPAK = os.getenv("container") == "flatpak"
+-- Theme + Colors
+config.color_scheme = "Tokyo Night"
 
-config.check_for_updates = true
-
--- NOTE: do not use login shells as they make it load profile each time and
--- when there is no need to do that, except in containers
-if WINDOWS then
-	-- default_domain = "WSL:Ubuntu"
-	config.default_prog = { "wsl", "-d", "Arch", "--cd", "~" }
-else
-	local shell = os.getenv("SHELL")
-	if FLATPAK or not shell then
-		-- shell var in flatpak is always /bin/sh so default to zsh
-		shell = "/usr/bin/zsh"
-	end
-
-	config.launch_menu = {
-		{
-			label = "System Shell",
-			args = { shell },
-		},
-	}
-
-	-- default to first menu item
-	config.default_prog = config.launch_menu[1].args
-end
-
--- EVENTS
--- add menu subcommand `wezterm start menu <index|label>`
-wezterm.on("gui-startup", function(cmd_obj)
-	local tab = nil
-	local pane = nil
-	local window = nil
-
-	if cmd_obj and cmd_obj.args then
-		local args = cmd_obj.args
-
-		local command = args[1]
-		if command == "menu" and args[2] then
-			local arg = args[2]
-			local index = tonumber(arg)
-
-			if index ~= nil then
-				-- try to spawn the launch menu with the specific index
-				tab, pane, window = wezterm.mux.spawn_window(config.launch_menu[index] or {})
-			else
-				-- the argument is not a number so try to match it with a label
-				for _, menu_item in ipairs(config.launch_menu) do
-					if arg and string.lower(menu_item.label) == string.lower(arg) then
-						tab, pane, window = wezterm.mux.spawn_window(menu_item)
-					end
-				end
-
-				-- no matches found, spawn the default
-				tab, pane, window = wezterm.mux.spawn_window({})
-			end
-		end
-	end
-
-	-- fallback to default way it works so i dont break anything
-	if window == nil then
-		tab, pane, window = wezterm.mux.spawn_window(cmd_obj or {})
-	end
-end)
-
--- wezterm.on("update-right-status", function(window, pane)
--- 	local user_vars = pane:get_user_vars()
---
--- 	local icon = user_vars.window_prefix
--- 	if not icon or icon == "" then
--- 		-- fallback for the icon,
--- 		icon = ""
--- 	end
---
--- 	window:set_left_status(wezterm.format({
--- 		{ Background = { Color = "#333333" } },
--- 		{ Text = " " .. wezterm.pad_right(icon, 3) },
--- 	}))
---
--- 	local title = pane:get_title()
--- 	local date = " " .. wezterm.strftime("%H:%M %d-%m-%Y") .. " "
---
--- 	-- figure out a way to center it
--- 	window:set_right_status(wezterm.format({
--- 		{ Background = { Color = "#555555" } },
--- 		{ Text = " " .. title .. " " },
--- 		{ Background = { Color = "#333333" } },
--- 		{ Text = date },
--- 	}))
--- end)
-
-wezterm.on("format-tab-title", function(tab, _, _, _, _)
-	-- i do not like how i can basically hide tabs if i zoom in
-	local is_zoomed = ""
-	if tab.active_pane.is_zoomed then
-		is_zoomed = "z"
-	end
-
-	return {
-		{ Text = " " .. tab.tab_index + 1 .. is_zoomed .. " " },
-	}
-end)
-
---- THEMING ---
-config.color_scheme = "tokyonight_night"
--- config.color_scheme = "kanagawa"
+-- Font
 config.font = wezterm.font_with_fallback({
 	{ family = "Liga SFMono Nerd Font" },
 	{ family = "MesloLGL Nerd Font Propo" },
 })
-config.freetype_load_flags = "NO_HINTING"
--- config.freetype_render_target = "HorizontalLcd"
--- config.freetype_load_target = "HorizontalLcd"
-config.font_size = 9
-config.line_height = 1.4
--- config.cell_width = 0.9
-config.front_end = "WebGpu"
-
-config.window_padding = {
-	-- left = '6px',
-	left = 0,
-	-- right = '6px',
-	right = 0,
-	-- top = '2px',
-	top = 0,
-	bottom = 0,
+config.font_rules = {
+	-- Bold-not-italic
+	{
+		intensity = "Bold",
+		italic = false,
+		font = wezterm.font_with_fallback({
+			{
+				family = "Liga SFMono Nerd Font",
+				weight = "Bold",
+			},
+		}),
+	},
+	-- Bold-and-italic
+	{
+		intensity = "Bold",
+		italic = true,
+		font = wezterm.font_with_fallback({
+			{
+				family = "Liga SFMono Nerd Font",
+				weight = "Bold",
+				italic = true,
+			},
+		}),
+	},
+	-- normal-intensity-and-italic
+	{
+		intensity = "Normal",
+		italic = false,
+		font = wezterm.font_with_fallback({
+			{
+				family = "Liga SFMono Nerd Font",
+				weight = "Medium",
+			},
+		}),
+	},
+	-- half-intensity-and-italic (half-bright or dim)
+	{
+		intensity = "Half",
+		italic = true,
+		font = wezterm.font_with_fallback({
+			{
+				family = "Liga SFMono Nerd Font",
+				weight = "Light",
+				italic = true,
+			},
+		}),
+	},
+	-- half-intensity-and-not-italic
+	{
+		intensity = "Half",
+		italic = false,
+		font = wezterm.font_with_fallback({
+			{
+				family = "Liga SFMono Nerd Font",
+				weight = "Light",
+			},
+		}),
+	},
 }
+config.font_size = 12
+config.line_height = 1.3
+config.harfbuzz_features = { "calt=0" }
 
-local window_min = " 󰖰 "
-local window_max = " 󰖯 "
-local window_close = " 󰅖 "
-config.tab_bar_style = {
-	window_hide = window_min,
-	window_hide_hover = window_min,
-	window_maximize = window_max,
-	window_maximize_hover = window_max,
-	window_close = window_close,
-	window_close_hover = window_close,
-}
-
-config.tab_max_width = 100
-
--- makes the tabbar look more like TUI
-config.use_fancy_tab_bar = false
--- config.hide_tab_bar_if_only_one_tab = true -- you can drag using the tab bar
-
---- BEHAVIOUR ---
-config.hide_mouse_cursor_when_typing = true
+-- UI/UX
 config.default_cursor_style = "BlinkingUnderline"
-
--- remove all link parsing
-config.hyperlink_rules = {}
-
--- makes alt act as regular alt
-config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = false
-
-config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
-
--- TODO remove window frame when fullscreen
--- TODO change frame color depending on the user var
-config.window_frame = {
-	border_left_width = "3px",
-	border_right_width = "3px",
-	border_bottom_height = "3px",
-	border_top_height = "3px",
-	border_left_color = "gray",
-	border_right_color = "gray",
-	border_bottom_color = "gray",
-	border_top_color = "gray",
+config.default_workspace = "main"
+-- config.freetype_load_flags = "NO_HINTING"
+-- config.freetype_render_target = "VerticalLcd"
+-- config.freetype_load_target = "VerticalLcd"
+config.front_end = "WebGpu"
+config.enable_tab_bar = false
+-- Dim inactive panes
+config.inactive_pane_hsb = {
+	saturation = 0.24,
+	brightness = 0.5,
 }
+config.tab_bar_at_bottom = false
+config.use_fancy_tab_bar = false
+-- config.window_background_opacity = 0.9
+config.window_close_confirmation = "AlwaysPrompt"
+config.window_decorations = "RESIZE"
+config.window_padding = {
+	left = "0.5cell",
+	right = "0.5cell",
+	top = "0.5cell",
+	bottom = "0cell",
+}
+
+-- Misc
+config.max_fps = 120
+-- config.scrollback_lines = 3000
+config.status_update_interval = 1000
+
+-- Tab bar
+-- I don't like the look of "fancy" tab bar
+wezterm.on("update-status", function(window, pane)
+	-- Workspace name
+	local stat = window:active_workspace()
+	local stat_color = "#f7768e"
+	-- It's a little silly to have workspace name all the time
+	-- Utilize this to display LDR or current key table name
+	if window:active_key_table() then
+		stat = window:active_key_table()
+		stat_color = "#7dcfff"
+	end
+	if window:leader_is_active() then
+		stat = "LDR"
+		stat_color = "#bb9af7"
+	end
+
+	local basename = function(s)
+		-- Nothing a little regex can't fix
+		return string.gsub(s, "(.*[/\\])(.*)", "%2")
+	end
+
+	-- Current working directory
+	local cwd = pane:get_current_working_dir()
+	if cwd then
+		if type(cwd) == "userdata" then
+			-- Wezterm introduced the URL object in 20240127-113634-bbcac864
+			cwd = basename(cwd.file_path)
+		else
+			-- 20230712-072601-f4abf8fd or earlier version
+			cwd = basename(cwd)
+		end
+	else
+		cwd = ""
+	end
+
+	-- Current command
+	local cmd = pane:get_foreground_process_name()
+	-- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
+	cmd = cmd and basename(cmd) or ""
+
+	-- Time
+	-- local time = wezterm.strftime("%H:%M")
+
+	-- Left status (left of the tab line)
+	window:set_left_status(wezterm.format({
+		{ Foreground = { Color = stat_color } },
+		{ Text = "  " },
+		{ Text = wezterm.nerdfonts.oct_table .. "  " .. stat },
+		{ Text = " |" },
+	}))
+
+	-- Right status
+	window:set_right_status(wezterm.format({
+		-- Wezterm has a built-in nerd fonts
+		-- https://wezfurlong.org/wezterm/config/lua/wezterm/nerdfonts.html
+		{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
+		{ Text = " | " },
+		{ Foreground = { Color = "#e0af68" } },
+		{ Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
+		"ResetAttributes",
+		-- { Text = " | " },
+		-- { Text = wezterm.nerdfonts.md_clock .. "  " .. time },
+		{ Text = "  " },
+	}))
+end)
 
 return config
