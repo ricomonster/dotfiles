@@ -13,6 +13,9 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+--- GLOBALS ---
+local WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
+
 -- Theme + Colors
 config.color_scheme = "Tokyo Night"
 
@@ -113,6 +116,14 @@ config.window_padding = {
 config.max_fps = 120
 -- config.scrollback_lines = 3000
 config.status_update_interval = 1000
+
+-- Windows Override
+if WINDOWS then
+	config.default_prog = { "wsl", "-d", "Arch", "--cd", "~" }
+
+	config.font_size = 9
+	config.line_height = 1.4
+end
 
 -- Tab bar
 -- I don't like the look of "fancy" tab bar
