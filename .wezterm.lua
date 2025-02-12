@@ -16,12 +16,15 @@ end
 --- GLOBALS ---
 local WINDOWS = wezterm.target_triple == "x86_64-pc-windows-msvc"
 
+-- Liga SFMono Nerd Font
+local FONT_FAMILY = "JetBrainsMono Nerd Font Propo"
+
 -- Theme + Colors
 config.color_scheme = "Tokyo Night"
 
 -- Font
 config.font = wezterm.font_with_fallback({
-	{ family = "Liga SFMono Nerd Font" },
+	{ family = FONT_FAMILY },
 	{ family = "MesloLGL Nerd Font Propo" },
 })
 config.font_rules = {
@@ -31,7 +34,7 @@ config.font_rules = {
 		italic = false,
 		font = wezterm.font_with_fallback({
 			{
-				family = "Liga SFMono Nerd Font",
+				family = FONT_FAMILY,
 				weight = "Bold",
 			},
 		}),
@@ -42,7 +45,7 @@ config.font_rules = {
 		italic = true,
 		font = wezterm.font_with_fallback({
 			{
-				family = "Liga SFMono Nerd Font",
+				family = FONT_FAMILY,
 				weight = "Bold",
 				italic = true,
 			},
@@ -54,7 +57,7 @@ config.font_rules = {
 		italic = false,
 		font = wezterm.font_with_fallback({
 			{
-				family = "Liga SFMono Nerd Font",
+				family = FONT_FAMILY,
 				weight = "Medium",
 			},
 		}),
@@ -65,7 +68,7 @@ config.font_rules = {
 		italic = true,
 		font = wezterm.font_with_fallback({
 			{
-				family = "Liga SFMono Nerd Font",
+				family = FONT_FAMILY,
 				weight = "Light",
 				italic = true,
 			},
@@ -77,7 +80,7 @@ config.font_rules = {
 		italic = false,
 		font = wezterm.font_with_fallback({
 			{
-				family = "Liga SFMono Nerd Font",
+				family = FONT_FAMILY,
 				weight = "Light",
 			},
 		}),
