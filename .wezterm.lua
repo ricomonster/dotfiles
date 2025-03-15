@@ -87,8 +87,9 @@ config.font_rules = {
 	},
 }
 config.font_size = 12
-config.line_height = 1.3
-config.harfbuzz_features = { "calt=0" }
+config.line_height = 1.2
+-- For JetBrainsMono cause I have dotted zeroes
+config.harfbuzz_features = { "calt=0", "zero" }
 
 -- UI/UX
 config.default_cursor_style = "BlinkingUnderline"
@@ -122,6 +123,7 @@ config.status_update_interval = 1000
 
 -- Windows Override
 if WINDOWS then
+	-- I'm using Arch Linux, BTW
 	config.default_prog = { "wsl", "-d", "Arch", "--cd", "~" }
 
 	config.font_size = 9
