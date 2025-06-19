@@ -62,13 +62,13 @@ require('lazy').setup {
 
   require 'kickstart/plugins/nvim-ufo',
 
-  require 'kickstart/plugins/codeium',
+  -- require 'kickstart/plugins/codeium',
 
   -- require 'kickstart/plugins/statusline',
 
   -- require 'kickstart/plugins/startup',
   --
-  require 'kickstart/plugins/nvim-lint',
+  -- require 'kickstart/plugins/nvim-lint',
 
   require 'kickstart/plugins/vim-tmux-navigator',
 

@@ -12,6 +12,8 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
+      vim.lsp.set_log_level 'debug'
+
       -- Brief Aside: **What is LSP?**
       --
       -- LSP is an acronym you've probably heard, but might not understand what it is.
@@ -186,10 +188,17 @@ return {
         },
 
         eslint = {
+          settings = {
+            experimental = {
+              -- allows to use flat config format
+              useFlatConfig = true,
+            },
+          },
           on_attach = function(_, bufnr)
             vim.api.nvim_create_autocmd('BufWritePre', {
+              pattern = { '*.tsx', '*.ts', '*.jsx', '*.js', '*.svelte' },
               buffer = bufnr,
-              command = 'EslintFixAll',
+              command = 'silent! EslintFixAll',
             })
           end,
         },
