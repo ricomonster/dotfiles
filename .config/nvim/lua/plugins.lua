@@ -47,7 +47,7 @@ require('lazy').setup({
   -- LSP Plugins
   require 'kickstart.plugins.lazydev',
   require 'kickstart.plugins.lspconfig',
-
+  require 'kickstart.plugins.autoclose',
   require 'kickstart.plugins.conform',
   require 'kickstart.plugins.blink',
   require 'kickstart.plugins.tokyonight',

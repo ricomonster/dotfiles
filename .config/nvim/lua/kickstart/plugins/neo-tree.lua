@@ -11,13 +11,20 @@ return {
   },
   lazy = false,
   keys = {
-    { '<leader>et', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
+    { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
+    window = {
+      width = 30,
+    },
     filesystem = {
+      filtered_items = {
+        hide_gitignored = false,
+        hide_dotfiles = false,
+      },
       window = {
         mappings = {
-          ['<leader>et'] = 'close_window',
+          ['\\'] = 'close_window',
         },
       },
     },
