@@ -30,7 +30,7 @@ if ([[ $(uname) == "Linux" ]]); then
 fi
 
 # Cargo
-export PATH="$HOME/.cargo/bin:$PATH"
+# export PATH="$HOME/.cargo/bin:$PATH"
 
 # Go
 export GOPATH=$(go env GOPATH)
