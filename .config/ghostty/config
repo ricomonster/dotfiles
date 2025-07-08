@@ -43,6 +43,7 @@
 # resize-overlay-duration = 4s 200ms
 # Font configuration
 font-family = JetBrains Mono
+font-style = "Medium"
 font-size = 9
 font-feature = calt=0
 font-feature = zero
