@@ -42,17 +42,23 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 # Font configuration
-font-family = JetBrains Mono
-font-style = "Medium"
-font-size = 9
+# Linux
+# font-family = JetBrains Mono
+# font-style = "Medium"
+# font-size = 9
+# MacOS
+font-family = "JetBrainsMono Nerd Font Propo"
+font-size = 10
 font-feature = calt=0
 font-feature = zero
-adjust-cell-height = 25%
+adjust-cell-height = 20%
 
+cursor-style = underline
+shell-integration-features = no-cursor
 
 # Window settings
 window-padding-x = 6
-window-padding-y = 2
+window-padding-y = 6
 window-decoration = false
 background-opacity = 0.98
 
