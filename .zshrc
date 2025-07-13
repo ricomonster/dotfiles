@@ -40,7 +40,11 @@ fi
 export GOPATH=$(go env GOPATH)
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
+
+# Kinda replaces the native ls command
 alias ll="eza -l --icons"
 alias ls="eza --icons"
 alias ll="eza -l --icons"
 alias la="eza -la --icons"
+
+export LC_NUMERIC=en_US.UTF-8

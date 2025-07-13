@@ -43,12 +43,12 @@
 # resize-overlay-duration = 4s 200ms
 # Font configuration
 # Linux
-# font-family = JetBrains Mono
-# font-style = "Medium"
-# font-size = 9
+font-family = JetBrains Mono
+font-style = "Medium"
+font-size = 9
 # MacOS
-font-family = "JetBrainsMono Nerd Font Propo"
-font-size = 10
+# font-family = "JetBrainsMono Nerd Font Propo"
+# font-size = 10
 font-feature = calt=0
 font-feature = zero
 adjust-cell-height = 20%
