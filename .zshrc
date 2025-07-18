@@ -48,3 +48,7 @@ alias ll="eza -l --icons"
 alias la="eza -la --icons"
 
 export LC_NUMERIC=en_US.UTF-8
+
+# Tmuxifier
+export PATH="$HOME/.tmuxifier/bin:$PATH"
+eval "$(tmuxifier init -)"
