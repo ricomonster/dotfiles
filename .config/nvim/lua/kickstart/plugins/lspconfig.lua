@@ -235,6 +235,24 @@ return {
           },
         },
       },
+      svelte = {
+        settings = {
+          svelte = {
+            plugin = {
+              typescript = {
+                diagnostics = { enable = true },
+                hover = { enable = true },
+                documentSymbols = { enable = true },
+                completions = { enable = true },
+                codeActions = { enable = true },
+                selectionRange = { enable = true },
+                signatureHelp = { enable = true },
+                semanticTokens = { enable = true },
+              },
+            },
+          },
+        },
+      },
     }
 
     -- Ensure the servers and tools above are installed
