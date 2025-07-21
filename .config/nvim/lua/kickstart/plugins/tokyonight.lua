@@ -20,6 +20,10 @@ return {
     -- Like many other themes, this one has different styles, and you could load
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     vim.cmd.colorscheme 'tokyonight-night'
+
+    -- Sets the background color of neotree almost the same with the editor
+    vim.cmd 'highlight NeoTreeNormal guibg=#1A1B26'
+    vim.cmd 'highlight NeoTreeNormalNC guibg=#1A1B26'
   end,
 }
 -- The line beneath this is called `modeline`. See `:help modeline`

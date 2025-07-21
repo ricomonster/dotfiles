@@ -17,6 +17,12 @@ return {
     window = {
       width = 30,
     },
+    default_component_configs = {
+      indent = {
+        indent_marker = '',
+        last_indent_marker = '',
+      },
+    },
     filesystem = {
       filtered_items = {
         hide_gitignored = false,
