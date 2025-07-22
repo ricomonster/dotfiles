@@ -19,8 +19,8 @@ return {
     },
     default_component_configs = {
       indent = {
-        indent_marker = '',
-        last_indent_marker = '',
+        indent_marker = ' ',
+        last_indent_marker = ' ',
       },
     },
     filesystem = {
