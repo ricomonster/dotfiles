@@ -13,6 +13,7 @@ if initialize_session "dots"; then
   split_h 20
   run_cmd "lazygit"
   select_pane 1
+  run_cmd "nvim"
 
   # Load a defined window layout.
   #load_window "example"

@@ -12,6 +12,7 @@ run_cmd "lazygit"
 split_v 50
 run_cmd "make dev"
 select_pane 1
+run_cmd "nvim"
 
 # Run commands.
 #run_cmd "top"     # runs in active pane
