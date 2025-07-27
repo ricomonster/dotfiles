@@ -13,7 +13,7 @@ if initialize_session "dotagiftx"; then
   split_h 20
   run_cmd "lazygit"
   split_v 50
-  run_cmd "npm run dev"
+  run_cmd "yarn run dev"
   select_pane 1
   run_cmd "nvim"
 
