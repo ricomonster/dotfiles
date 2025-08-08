@@ -1,7 +1,7 @@
 * {
     /* `otf-font-awesome` and SpaceMono Nerd Font are required to be installed for icons */
     font-family: "JetBrains Mono", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     transition: background-color .3s ease-out;
 }
 
@@ -15,20 +15,20 @@ window#waybar {
 .modules-center,
 .modules-right
 {
-    background: rgba(0, 0, 8, .7);
-    margin: 5px 10px;
+    background: rgba(26, 27, 38, .9);
+    margin: 5px;
     padding: 0 5px;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 .modules-left {
     padding: 0;
 }
 .modules-center {
-    padding: 0 10px;
+    padding: 0 8px;
 }
 
 #window {
-    padding: 0 10px;
+    padding: 0 5px;
 }
 
 #clock,
@@ -48,19 +48,16 @@ window#waybar {
 #scratchpad,
 #power-profiles-daemon,
 #language,
+#custom-storage,
 #mpd {
-    padding: 0 10px;
-    border-radius: 15px;
-}
-
-#cpu {
-    padding: 0 5px 0 10px;
+    padding: 0 5px;
+    border-radius: 8px;
 }
 
 #custom-storage,
 #custom-power {
     padding: 0 2px;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 
 #clock:hover,
@@ -80,33 +77,39 @@ window#waybar {
 #scratchpad:hover,
 #power-profiles-daemon:hover,
 #language:hover,
+#custom-storage:hover,
+#custom-power:hover,
 #mpd:hover {
-    background: rgba(26, 27, 38, 0.7);
+  background: #c0caf5;
+  color: #1a1b26;
 }
 
-
+#workspaces {
+    margin-left: 2px;
+}
 #workspaces button {
-  background: transparent;
-  font-weight: 900;
-  font-size: 13pt;
-  color: #fff1e3;
-  border:none;
-  border-radius: 15px;
+    background: transparent;
+    border-radius: 5px;
+    border:none;
+    color: #fff1e3;
+    font-weight: 900;
+    padding: 0px 5px;
 }
 
 #workspaces button.active {
-    background: #13131d; 
+  background: #ff899d; 
+  color: #fff1e3;
 }
 
 #workspaces button:hover {
-  background: #11111b;
-  color: #cdd6f4;
+  background: #c0caf5;
+  color: #1a1b26;
   box-shadow: none;
 }
 
 #custom-arch {
     margin-left: 5px;
-    padding: 0 10px;
+    padding: 0 8px;
     font-size: 25px;
     transition: color .5s;
 }

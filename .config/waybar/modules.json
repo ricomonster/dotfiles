@@ -49,8 +49,7 @@
         "format-ethernet": "Ethernet ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "(No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "on-click": "sh ~/scripts/wifi.sh"
+        "format-disconnected": "Disconnected ⚠"
     },
     "cpu": {
         "format": " {usage}%",
@@ -58,15 +57,15 @@
         "tooltip": true
     },
     "memory": {
-        "format": " {}%",
+        "format": " {used:0.2f}/{total:0.0f}GB",
         "interval": 60,
         "on-click": "ghostty -e btop",
         "tooltip": true
     },
     "temperature": {
-        "interval": 10,
-        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
-        "critical-threshold": 100,
+        "interval": 5,
+        "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+        "critical-threshold": 80,
         "format-critical": " {temperatureC}",
         "format": " {temperatureC}°C"
     },
@@ -112,5 +111,10 @@
         "return-type": "json",
         "interval": 60,
         "exec": "~/.config/waybar/modules/storage.sh"
+    },
+    "custom/music": {
+        "format": "{}",
+        "return-type": "json",
+        "exec": "waybar-module-music --ellipsis --title-width 10"
     }
 }
