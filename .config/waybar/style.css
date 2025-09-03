@@ -2,6 +2,7 @@
     /* `otf-font-awesome` and SpaceMono Nerd Font are required to be installed for icons */
     font-family: "JetBrains Mono", sans-serif;
     font-size: 13px;
+    font-feature-settings: "zero";
     transition: background-color .3s ease-out;
 }
 

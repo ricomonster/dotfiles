@@ -45,11 +45,24 @@
         "on-click": "GDK_DISABLE=vulkan pavucontrol"
     },
     "network": {
-        "format-wifi": "   {essid} ({signalStrength}%)",
+        "interface": "wlan0",
+        "format-icons": [
+            "󰤯",
+            "󰤟",
+            "󰤢",
+            "󰤥",
+            "󰤨"
+        ],
+        "format-wifi": "{icon} {essid} ({signalStrength}%)",
         "format-ethernet": "Ethernet ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
+        "tooltip-format-wifi": "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-ethernet": "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+        "tooltip-format-disconnected": "Disconnected",
         "format-linked": "(No IP) ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-disconnected": "Disconnected ⚠",
+        "interval": 5,
+        "max-length": 15,
+        "on-click": "nm-connection-editor"
     },
     "cpu": {
         "format": " {usage}%",
@@ -58,7 +71,7 @@
     },
     "memory": {
         "format": " {used:0.2f}/{total:0.0f}GB",
-        "interval": 60,
+        "interval": 5,
         "on-click": "ghostty -e btop",
         "tooltip": true
     },
