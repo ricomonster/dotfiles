@@ -216,9 +216,13 @@ run = 'move-node-to-workspace 5'
 if.app-id = 'com.postmanlabs.mac'
 run = 'move-node-to-workspace 5'
 
-# [[on-window-detected]]
-# if.app-id = 'com.TickTick.task.mac'
-# run = 'move-node-to-workspace T'
+[[on-window-detected]]
+if.app-id = 'com.TickTick.task.mac'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
