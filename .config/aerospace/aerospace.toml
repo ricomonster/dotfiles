@@ -224,9 +224,13 @@ run = 'move-node-to-workspace 3'
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 3'
 
+# [[on-window-detected]]
+# if.app-id = 'com.github.wez.wezterm'
+# run = 'move-node-to-workspace 4'
+
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
-run = 'move-node-to-workspace 4'
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 9'
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
@@ -243,6 +247,10 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'app.zen.browser.zen.window'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'org.openvpn.client.app'
 run = 'layout floating'
 
 [[on-window-detected]]
