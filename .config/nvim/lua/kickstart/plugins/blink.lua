@@ -80,10 +80,22 @@ return {
     },
 
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev', 'codeium' },
+      default = {
+        'lsp',
+        'path',
+        'snippets',
+        'lazydev',
+        'codeium',
+        -- 'minuet',
+      },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
         codeium = { name = 'Codeium', module = 'codeium.blink', async = true },
+        -- minuet = {
+        --   name = 'minuet',
+        --   module = 'minuet.blink',
+        --   score_offset = 8, -- bumps it up in the completion list
+        -- },
       },
     },
 

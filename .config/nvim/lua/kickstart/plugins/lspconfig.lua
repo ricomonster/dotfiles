@@ -204,8 +204,22 @@ return {
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      -- ts_ls = {},
-      --
+      ts_ls = {
+        settings = {
+          typescript = {
+            preferences = {
+              includeCompletionsForModuleExports = true, -- auto-import
+              importModuleSpecifier = 'relative', -- or 'non-relative'
+            },
+          },
+          javascript = {
+            preferences = {
+              includeCompletionsForModuleExports = true,
+              importModuleSpecifier = 'relative',
+            },
+          },
+        },
+      },
 
       lua_ls = {
         -- cmd = { ... },

@@ -52,3 +52,6 @@ export LC_NUMERIC=en_US.UTF-8
 # tmuxifier via TPM
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
+
+# .zshrc (safe to commit)
+[ -f ~/.secrets ] && source ~/.secrets
