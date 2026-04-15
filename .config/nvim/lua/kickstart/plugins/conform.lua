@@ -24,8 +24,8 @@ return {
         return nil
       else
         return {
-          timeout_ms = 1000,
-          lsp_format = 'fallback',
+          lsp_fallback = true,
+          timeout_ms = 500,
         }
       end
     end,
@@ -36,8 +36,8 @@ return {
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { 'eslint' },
-      typescript = { 'eslint' },
+      javascript = { 'eslint_d' },
+      typescript = { 'eslint_d' },
       svelte = { 'eslint_d' },
       go = { 'goimports-reviser', 'gofumpt' },
     },
