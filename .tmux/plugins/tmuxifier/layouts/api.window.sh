@@ -10,7 +10,7 @@ new_window "api"
 split_h 20
 run_cmd "lazygit"
 split_v 50
-run_cmd "make dev"
+# run_cmd "make dev"
 select_pane 1
 run_cmd "nvim"
 
