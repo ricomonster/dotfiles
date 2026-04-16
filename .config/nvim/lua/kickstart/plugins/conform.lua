@@ -36,9 +36,9 @@ return {
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { 'eslint_d' },
-      typescript = { 'eslint_d' },
-      svelte = { 'eslint_d' },
+      javascript = { 'prettier', 'eslint_d' },
+      typescript = { 'prettier', 'eslint_d' },
+      svelte = { 'prettier', 'eslint_d' },
       go = { 'goimports-reviser', 'gofumpt' },
     },
   },

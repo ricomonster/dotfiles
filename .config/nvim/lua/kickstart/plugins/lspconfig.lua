@@ -286,7 +286,7 @@ return {
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
       'eslint_d',
-      'eslint',
+      'prettier',
       'ts_ls',
       'jsonls',
       'gopls',
