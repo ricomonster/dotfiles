@@ -36,10 +36,40 @@ return {
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { 'prettier', 'eslint_d' },
-      typescript = { 'prettier', 'eslint_d' },
-      svelte = { 'prettier', 'eslint_d' },
+      javascript = { 'prettier', 'eslint_d', stop_after_first = false },
+      typescript = { 'prettier', 'eslint_d', stop_after_first = false },
+      svelte = { 'prettier', 'eslint_d', stop_after_first = false },
       go = { 'goimports-reviser', 'gofumpt' },
+    },
+    formatters = {
+      prettier = {
+        condition = function(ctx)
+          local configs = {
+            '.prettierrc',
+            '.prettierrc.json',
+            '.prettierrc.json5',
+            '.prettierrc.yml',
+            '.prettierrc.yaml',
+            '.prettierrc.js',
+            '.prettierrc.cjs',
+            '.prettierrc.mjs',
+            'prettier.config.js',
+            'prettier.config.cjs',
+            'prettier.config.mjs',
+          }
+          -- check for config files
+          if vim.fs.find(configs, { path = ctx.filename, upward = true })[1] then
+            return true
+          end
+          -- check for "prettier" key in package.json
+          local pkg = vim.fs.find('package.json', { path = ctx.filename, upward = true })[1]
+          if pkg then
+            local content = vim.fn.readfile(pkg)
+            return vim.fn.join(content, ''):find '"prettier"' ~= nil
+          end
+          return false
+        end,
+      },
     },
   },
 }
