@@ -3,11 +3,22 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function()
     require('minuet').setup {
-      provider = 'claude',
+      provider = 'openai_compatible',
+      request_timeout = 2.5,
+      throttle = 1500, -- Increase to reduce costs and avoid rate limits
+      debounce = 600, -- Increase to reduce costs and avoid rate limits
       provider_options = {
-        claude = {
-          model = 'claude-haiku-4-5-20251001',
-          max_tokens = 512,
+        openai_compatible = {
+          api_key = 'OPENCODE_GO_API_KEY',
+          end_point = 'https://opencode.ai/zen/go/v1/chat/completions',
+          model = 'deepseek-v4-flash',
+          name = 'Opencode',
+          optional = {
+            max_tokens = 56,
+            top_p = 0.9,
+            -- disable thinking to avoid first token latency
+            thinking = { type = 'disabled' },
+          },
         },
       },
     }

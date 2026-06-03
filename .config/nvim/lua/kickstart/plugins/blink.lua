@@ -71,12 +71,33 @@ return {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'mono',
+      use_nvim_cmp_as_default = true,
+      kind_icons = {
+        -- LLM Provider icons
+        claude = '󰋦',
+        openai = '󱢆',
+        codestral = '󱎥',
+        gemini = '',
+        Groq = '',
+        Openrouter = '󱂇',
+        Ollama = '󰳆',
+        ['Llama.cpp'] = '󰳆',
+        Deepseek = '',
+      },
     },
 
     completion = {
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
       documentation = { auto_show = false, auto_show_delay_ms = 500 },
+      menu = {
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind_icon', 'kind' },
+          },
+        },
+      },
     },
 
     sources = {
@@ -85,17 +106,17 @@ return {
         'path',
         'snippets',
         'lazydev',
-        'codeium',
-        -- 'minuet',
+        -- 'codeium',
+        'minuet',
       },
       providers = {
         lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-        codeium = { name = 'Codeium', module = 'codeium.blink', async = true },
-        -- minuet = {
-        --   name = 'minuet',
-        --   module = 'minuet.blink',
-        --   score_offset = 8, -- bumps it up in the completion list
-        -- },
+        -- codeium = { name = 'Codeium', module = 'codeium.blink', async = true },
+        minuet = {
+          name = 'minuet',
+          module = 'minuet.blink',
+          score_offset = 8, -- bumps it up in the completion list
+        },
       },
     },
 

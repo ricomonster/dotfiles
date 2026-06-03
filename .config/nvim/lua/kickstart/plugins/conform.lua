@@ -40,6 +40,7 @@ return {
       typescript = { 'eslint_d' },
       svelte = { 'prettier', 'eslint_d', stop_after_first = false },
       go = { 'goimports-reviser', 'gofumpt' },
+      nix = { 'alejandra' },
     },
     formatters = {
       prettier = {
