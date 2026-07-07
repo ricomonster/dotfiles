@@ -2,3 +2,5 @@
 .config/go
 .config/spicetify
 .config/daedalus
+.config/opencode
+.config/tokscale

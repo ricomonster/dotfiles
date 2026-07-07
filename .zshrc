@@ -26,7 +26,14 @@ fi
 
 # macOS
 if ([[ $(uname) == "Darwin" ]]); then
-	source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+  # bun completions
+  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+  # bun
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
 fi
 
 if ([[ $(uname) == "Linux" ]]); then
@@ -35,6 +42,9 @@ fi
 
 # Cargo
 # export PATH="$HOME/.cargo/bin:$PATH"
+
+# Local
+export PATH="$HOME/.local/bin:$PATH"
 
 # Go
 export GOPATH=$(go env GOPATH)

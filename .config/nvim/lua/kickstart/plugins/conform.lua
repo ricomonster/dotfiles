@@ -13,64 +13,36 @@ return {
       desc = '[F]ormat buffer',
     },
   },
+  config = function(_, opts)
+    require('conform').setup(opts)
+
+    -- Pre-warm eslint_d so it's ready before first save
+    vim.api.nvim_create_autocmd('VimEnter', {
+      callback = function()
+        vim.fn.jobstart('eslint_d status || eslint_d start', { detach = true })
+      end,
+    })
+  end,
   opts = {
     notify_on_error = false,
-    format_after_save = function(bufnr)
-      -- Disable "format_on_save lsp_fallback" for languages that don't
-      -- have a well standardized coding style. You can add additional
-      -- languages here or re-enable it for the disabled ones.
+    format_on_save = function(bufnr)
       local disable_filetypes = { c = true, cpp = true }
       if disable_filetypes[vim.bo[bufnr].filetype] then
         return nil
       else
         return {
-          lsp_fallback = true,
-          timeout_ms = 500,
+          lsp_format = 'never',
+          timeout_ms = 5000,
         }
       end
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      javascript = { 'eslint_d', stop_after_first = false },
-      typescript = { 'eslint_d' },
-      svelte = { 'prettier', 'eslint_d', stop_after_first = false },
+      javascript = { 'eslint_d', stop_after_first = true },
+      typescript = { 'eslint_d', stop_after_first = true },
+      svelte = { 'eslint_d', stop_after_first = true },
       go = { 'goimports-reviser', 'gofumpt' },
       nix = { 'alejandra' },
-    },
-    formatters = {
-      prettier = {
-        condition = function(ctx)
-          local configs = {
-            '.prettierrc',
-            '.prettierrc.json',
-            '.prettierrc.json5',
-            '.prettierrc.yml',
-            '.prettierrc.yaml',
-            '.prettierrc.js',
-            '.prettierrc.cjs',
-            '.prettierrc.mjs',
-            'prettier.config.js',
-            'prettier.config.cjs',
-            'prettier.config.mjs',
-          }
-          -- check for config files
-          if vim.fs.find(configs, { path = ctx.filename, upward = true })[1] then
-            return true
-          end
-          -- check for "prettier" key in package.json
-          local pkg = vim.fs.find('package.json', { path = ctx.filename, upward = true })[1]
-          if pkg then
-            local content = vim.fn.readfile(pkg)
-            return vim.fn.join(content, ''):find '"prettier"' ~= nil
-          end
-          return false
-        end,
-      },
     },
   },
 }

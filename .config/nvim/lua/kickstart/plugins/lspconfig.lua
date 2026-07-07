@@ -205,20 +205,38 @@ return {
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
       ts_ls = {
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.semanticTokensProvider = nil
+        end,
+        init_options = {
+          maxTsServerMemory = 4096,
+          disableAutomaticTypingAcquisition = true,
+          preferences = {
+            disablePartialSemanticDiagnostics = true,
+            includeCompletionsForModuleExports = true,
+            importModuleSpecifier = 'relative',
+          },
+        },
         settings = {
           typescript = {
             preferences = {
-              includeCompletionsForModuleExports = true, -- auto-import
-              importModuleSpecifier = 'relative', -- or 'non-relative'
+              importModuleSpecifier = 'relative',
             },
           },
           javascript = {
             preferences = {
-              includeCompletionsForModuleExports = true,
               importModuleSpecifier = 'relative',
             },
           },
         },
+      },
+
+      eslint = {
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end,
       },
 
       lua_ls = {
@@ -287,9 +305,7 @@ return {
       'stylua', -- Used to format Lua code
       'eslint_d',
       'prettier',
-      'ts_ls',
       'jsonls',
-      'gopls',
       'goimports-reviser',
       'gofumpt',
     })
@@ -301,11 +317,15 @@ return {
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for ts_ls)
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
+
+          local ok, lspconf = pcall(require, 'lspconfig')
+          if ok then
+            local default_init = (lspconf[server_name].config_def or {}).default_config and lspconf[server_name].config_def.default_config.init_options or {}
+            server.init_options = vim.tbl_deep_extend('force', {}, default_init, server.init_options or {})
+          end
+
+          lspconf[server_name].setup(server)
         end,
       },
     }
