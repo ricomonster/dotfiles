@@ -240,19 +240,15 @@ return {
       },
 
       lua_ls = {
-        -- cmd = { ... },
-        -- filetypes = { ... },
-        -- capabilities = {},
         settings = {
           Lua = {
             completion = {
               callSnippet = 'Replace',
             },
-            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
           },
         },
       },
+
       gopls = {
         cmd = { 'gopls' },
         filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
@@ -267,6 +263,7 @@ return {
           },
         },
       },
+
       svelte = {
         settings = {
           svelte = {
@@ -284,6 +281,32 @@ return {
             },
           },
         },
+      },
+
+      tailwindcss = {
+        -- Attach ONLY when a tailwind/postcss config is found upward from the buffer.
+        -- No .git fallback: if no config is found, on_dir is never called, so the
+        -- server does not attach ("run only when there's a config found").
+        root_dir = function(bufnr, on_dir)
+          local root_files = {
+            'tailwind.config.js',
+            'tailwind.config.cjs',
+            'tailwind.config.mjs',
+            'tailwind.config.ts',
+            'tailwind.config.tsx',
+            'postcss.config.js',
+            'postcss.config.cjs',
+            'postcss.config.mjs',
+          }
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          if fname == '' then
+            return -- unsaved buffer: don't attach
+          end
+          local found = vim.fs.find(root_files, { path = vim.fs.dirname(fname), upward = true })
+          if found[1] then
+            on_dir(vim.fs.dirname(found[1]))
+          end
+        end,
       },
     }
 
@@ -306,7 +329,6 @@ return {
       'eslint_d',
       'prettier',
       'jsonls',
-      'goimports-reviser',
       'gofumpt',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -38,11 +38,41 @@ return {
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      javascript = { 'eslint_d', stop_after_first = true },
-      typescript = { 'eslint_d', stop_after_first = true },
-      svelte = { 'eslint_d', stop_after_first = true },
-      go = { 'goimports-reviser', 'gofumpt' },
+      javascript = { 'eslint_d', 'prettier', stop_after_first = true },
+      typescript = { 'eslint_d', 'prettier', stop_after_first = true },
+      svelte = { 'eslint_d', 'prettier', stop_after_first = true },
+      go = { 'gofumpt' },
       nix = { 'alejandra' },
+      json = { 'jsonls' },
+      jsonc = { 'jsonls' },
+      html = { 'prettier' },
+      css = { 'prettier' },
+    },
+    formatters = {
+      prettier = {
+        condition = function(_, ctx)
+          local configs = {
+            '.prettierrc',
+            '.prettierrc.json',
+            '.prettierrc.json5',
+            '.prettierrc.yml',
+            '.prettierrc.yaml',
+            '.prettierrc.js',
+            '.prettierrc.cjs',
+            '.prettierrc.mjs',
+            '.prettierrc.toml',
+            'prettier.config.js',
+            'prettier.config.cjs',
+            'prettier.config.mjs',
+          }
+          local found = vim.fs.find(configs, {
+            path = vim.fs.dirname(ctx.filename),
+            upward = true,
+            limit = 1,
+          })
+          return #found > 0
+        end,
+      },
     },
   },
 }
