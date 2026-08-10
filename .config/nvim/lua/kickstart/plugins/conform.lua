@@ -31,7 +31,7 @@ return {
         return nil
       else
         return {
-          lsp_format = 'never',
+          lsp_format = 'fallback',
           timeout_ms = 5000,
         }
       end
@@ -43,8 +43,6 @@ return {
       svelte = { 'prettier', 'eslint_d' },
       go = { 'gofumpt' },
       nix = { 'alejandra' },
-      json = { 'json-lsp' },
-      jsonc = { 'json-lsp' },
       html = { 'prettier' },
       css = { 'prettier' },
     },
