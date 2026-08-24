@@ -63,5 +63,8 @@ export LC_NUMERIC=en_US.UTF-8
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 eval "$(tmuxifier init -)"
 
+export PONYTAIL_DEFAULT_MODE="off"
+# export PONYTAIL_SUBAGENT_MATCHER="principal-engineer"
+
 # .zshrc (safe to commit)
 [ -f ~/.secrets ] && source ~/.secrets

@@ -48,13 +48,15 @@ font-style = "SemiBold"
 # font-size = 9
 
 # MacOS
-font-family = "JetBrainsMono Nerd Font Propo"
+# font-family = "JetBrainsMono Nerd Font"
+# font-family = Monocraft
+font-family = 0xProto
 font-size = 10
 font-thicken = true
 
 font-feature = calt=0
 font-feature = zero
-adjust-cell-height = 15%
+adjust-cell-height = 20%
 
 cursor-style = underline
 shell-integration-features = no-cursor
@@ -71,6 +73,7 @@ term = xterm-256color
 
 # Keybindings
 # keybind = f11=toggle_fullscreen
+keybind = performable:super+v=paste_from_clipboard
 
 # Tokyo Night Color Scheme
 palette = 0=#15161e
