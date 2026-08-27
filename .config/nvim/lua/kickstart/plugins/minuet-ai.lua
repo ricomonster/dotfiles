@@ -17,7 +17,8 @@ return {
             max_tokens = 56,
             top_p = 0.9,
             -- disable thinking to avoid first token latency
-            thinking = { type = 'disabled' },
+            -- thinking = { type = 'disabled' },
+            reasoning_effort = 'none',
           },
         },
       },
