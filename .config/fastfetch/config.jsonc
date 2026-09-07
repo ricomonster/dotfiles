@@ -1,152 +1,98 @@
+// Inspired by Catnap
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-  "display": {
-    "disableLinewrap": false,
-    "separator": "",
-    "key": {
-      "width": 14
-    },
-    "temp": {},
-    "bar": {
-      "width": 12,
-      "char": {
-        "total": "",
-        "elapsed": ""
-      },
-      "border": {
-        "left": "",
-        "leftElapsed": "",
-        "right": "",
-        "rightElapsed": ""
-      },
-      "color": {
-        "total": null
-      }
-    },
-    "percent": {
-      "type": [
-        "bar",
-        "bar-monochrome"
-      ]
+  "logo": {
+    "type": "auto", // 'auto' detects the best protocol for your terminal
+    "width": 12, // Adjust width (in characters)
+    "padding": {
+      "top": 1,
+      "right": 4,
+      "left": 3
     }
+  },
+  "display": {
+    "separator": " "
   },
   "modules": [
     {
+      "key": "╭───────────╮",
+      "type": "custom"
+    },
+    {
+      "key": "│ {#34} user    {#keys}│",
       "type": "title",
-      "color": {
-        "user": "red",
-        "at": "red",
-        "host": "red"
-      }
-    },
-    "break",
-    {
-      "type": "host",
-      "key": "{icon} host",
-      "keyColor": "blue",
-      "format": "{name}"
+      "format": "{user-name}"
     },
     {
-      "type": "os",
-      "key": "{icon} os",
-      "keyColor": "blue",
-      "format": "{name} {codename} {version} ({arch})"
+      "key": "│ {#34}󰇅 hname   {#keys}│",
+      "type": "title",
+      "format": "{host-name}"
     },
     {
-      "type": "kernel",
-      "key": "{icon} kernel",
-      "keyColor": "blue",
-      "format": "{sysname} {release}"
-    },
-    {
-      "type": "wm",
-      "key": "{icon} wm",
-      "keyColor": "blue",
-      "format": "{pretty-name}"
-    },
-    {
-      "type": "font",
-      "key": "{icon} sysfont",
-      "keyColor": "blue",
-      "format": "{combined}"
-    },
-    {
-      "type": "packages",
-      "key": "{icon} packages",
-      "keyColor": "blue"
-    },
-    {
-      "type": "uptime",
-      "key": "{icon} uptime",
-      "keyColor": "blue",
-      "format": "{formatted}"
-    },
-    {
-      "type": "terminal",
-      "key": "{icon} term",
-      "keyColor": "magenta",
-      "format": "{pretty-name} {version}"
-    },
-    {
-      "type": "terminalFont",
-      "key": " termfont",
-      "keyColor": "magenta",
-      "format": "{combined}"
-    },
-    {
-      "type": "shell",
-      "key": "{icon} shell",
-      "keyColor": "magenta",
-      "format": "{pretty-name} {version}"
-    },
-    {
-      "type": "editor",
-      "key": "{icon} editor",
-      "keyColor": "magenta",
-      "format": "{name} {version}"
-    },
-    {
-      "type": "cpu",
-      "key": "{icon} cpu",
-      "keyColor": "cyan",
-      "showPeCoreCount": true,
-      "temp": true,
-      "format": "{name} ({march}, {core-types} cores) @ {freq-max}"
-    },
-    {
-      "type": "gpu",
-      "key": "{icon} gpu",
-      "keyColor": "cyan",
-      "temp": true,
-      "format": "{name} [{type}] ({platform-api}, {core-count} cores) @ {frequency}"
-    },
-    {
-      "type": "memory",
-      "key": "{icon} mem",
-      "keyColor": "cyan",
-      "format": "{percentage-bar} {used} / {total}"
-    },
-    {
+      "condition": { // Conditional module: only show on non-macOS
+        "!system": "macOS"
+      },
       "type": "disk",
-      "key": "󰉉 disk",
-      "keyColor": "cyan",
-      "folders": "/",
-      "format": "{size-percentage-bar} {size-used} / {size-total} ({filesystem})"
+      "keyIcon": "",
+      "key": "│{#34} {icon} os age {#keys} │",
+      // "keyColor": "magenta",
+      "folders": "/", // Check root filesystem
+      "format": "{create-time:10} [{days} days ({years} years)]" // Show creation time and age in days
     },
     {
-      "type": "localip",
-      "key": "{icon} network",
-      "keyColor": "cyan",
-      "showIpv4": true,
-      "showSpeed": true,
-      "format": "{ipv4} ({ifname}) [{speed}]"
+      "key": "│ {#34}󰅐 uptime  {#keys}│",
+      "type": "uptime"
     },
-    "break",
     {
-      "type": "custom",
-      "format": "{#30}󰊠  {#31}󰊠  {#32}󰊠  {#33}󰊠  {#34}󰊠  {#35}󰊠  {#36}󰊠  {#37}󰊠"
+      "key": "│ {#34}{icon} distro  {#keys}│",
+      "type": "os"
     },
-    "break",
-    "break"
+    {
+      "key": "│ {#34} kernel  {#keys}│",
+      "type": "kernel"
+    },
+    {
+      "key": "│ {#34} wm      {#keys}│",
+      "type": "wm"
+    },
+    {
+      "key": "│ {#34}󰇄 desktop {#keys}│",
+      "type": "de"
+    },
+    {
+      "key": "│ {#34} term    {#keys}│",
+      "type": "terminal"
+    },
+    {
+      "key": "│ {#34} shell   {#keys}│",
+      "type": "shell"
+    },
+    {
+      "key": "│ {#34}󰍛 cpu     {#keys}│",
+      "type": "cpu",
+      "showPeCoreCount": true
+    },
+    {
+      "key": "│ {#34}󰉉 disk    {#keys}│",
+      "type": "disk",
+      "folders": "/"
+    },
+    {
+      "key": "│ {#34} memory  {#keys}│",
+      "type": "memory"
+    },
+    {
+      "key": "├───────────┤",
+      "type": "custom"
+    },
+    {
+      "key": "│ {#34} colors  {#keys}│",
+      "type": "colors",
+      "symbol": "circle"
+    },
+    {
+      "key": "╰───────────╯",
+      "type": "custom"
+    }
   ]
 }

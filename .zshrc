@@ -60,11 +60,15 @@ alias la="eza -la --icons"
 export LC_NUMERIC=en_US.UTF-8
 
 # tmuxifier via TPM
-export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
+# export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
+# eval "$(tmuxifier init -)"
 
 export PONYTAIL_DEFAULT_MODE="off"
 # export PONYTAIL_SUBAGENT_MATCHER="principal-engineer"
+
+
+# Herdr
+[[ -n "$HERDR_ENV" ]] && source "$HOME/.config/herdr/plugins/github/dev-shimada.auto-tab-name-bb12b11a4dc6/shell/hook.zsh"
 
 # .zshrc (safe to commit)
 [ -f ~/.secrets ] && source ~/.secrets

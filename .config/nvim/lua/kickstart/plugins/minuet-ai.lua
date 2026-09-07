@@ -13,6 +13,12 @@ return {
           end_point = 'https://opencode.ai/zen/go/v1/chat/completions',
           model = 'deepseek-v4-flash',
           name = 'Opencode',
+          transform = {
+            function(data)
+              data.headers['x-opencode-session'] = vim.env.OPENCODE_SESSION_ID
+              return data
+            end,
+          },
           optional = {
             max_tokens = 56,
             top_p = 0.9,
